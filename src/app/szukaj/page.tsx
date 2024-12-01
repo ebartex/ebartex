@@ -1,14 +1,15 @@
 'use client';
+
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from "next/image";
 import Navbar from "@/common/components/navbar";
-import { useSearchParams } from "next/navigation";
 import '@/styles/globals.css';
 import { fetchBapi } from "@/common/api/fetchBapi";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Infobar from "@/common/components/infobar";
 
-// Define the type for a Product
 type Product = {
     tw_id: string | number;
     nazwa: string;
@@ -22,10 +23,6 @@ export default function Szukaj() {
     const [results, setResults] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-    function isProductData(data: unknown): data is { Product: Product[] } {
-        return typeof data === 'object' && data !== null && 'Product' in data;
-    }
-    
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -34,19 +31,15 @@ export default function Szukaj() {
                     `https://bapi.ebartex.pl/products/format5.json?Product-nazwa=?${initialQuery}?`, 
                     { revalidate: 5 }
                 );
-    
-                if (isProductData(data)) {
-                    setResults(data.Product || []);
-                } else {
-                    throw new Error('Unexpected data format');
-                }
+                const productData = data as { Product: Product[] };
+                setResults(productData.Product || []);
             } catch {
                 setError('Wystąpił błąd podczas pobierania danych.');
             } finally {
                 setLoading(false);
             }
         };
-    
+
         if (initialQuery) {
             fetchData();
         } else {
@@ -56,13 +49,11 @@ export default function Szukaj() {
     }, [initialQuery]);
 
     return (
-        <>
+        <Suspense fallback={<p>Ładowanie...</p>}>
             <Infobar />  
             <Navbar />
             <div className="container mx-auto px-4">
                 <h1 className="text-2xl font-bold my-4">Wyniki wyszukiwania</h1>
-
-                {/* Obsługa stanu ładowania, błędu lub wyników */}
                 <div className="w-full">
                     <aside className="hidden md:block bg-white p-4"></aside>
                     <main className="p-4 bg-gray-100">
@@ -83,8 +74,8 @@ export default function Szukaj() {
                                         <Image
                                             src={item.photo_512 || "https://via.placeholder.com/150"}
                                             alt={item.nazwa}
-                                            width={128} // Stała szerokość
-                                            height={128} // Stała wysokość
+                                            width={128}
+                                            height={128}
                                             className="w-32 h-32 object-cover mb-4"
                                         />
                                         <span className="text-center">{item.nazwa}</span>
@@ -98,6 +89,6 @@ export default function Szukaj() {
                     </main>
                 </div>
             </div>
-        </>
+        </Suspense>
     );
 }
