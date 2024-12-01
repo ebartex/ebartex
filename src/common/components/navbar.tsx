@@ -1,12 +1,12 @@
 import Link from "next/link";
-
+import Image from "next/image";
 const Navbar: React.FC = () => {
     return (
             <nav className="bg-white flex items-center justify-between p-4">
               {/* Logo */}
               <div className="flex items-center">
                 <Link href="/">
-                    <img src="/bartex.png" alt="Logo" className="h-8" />
+                    <Image height={16} width={30} src="/bartex.png" alt="Logo" className="h-8" />
                 </Link>
               </div>
         
