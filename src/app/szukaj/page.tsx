@@ -15,7 +15,7 @@ type Product = {
     nazwa: string;
     photo_512?: string;
 };
-
+ 
 export default function Szukaj() {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
