@@ -7,12 +7,16 @@ import { fetchBapi } from "@/common/api/fetchBapi";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Infobar from "@/common/components/infobar";
-
+type Product = {
+    tw_id: string | number;
+    nazwa: string;
+    photo_512?: string;
+};
 export default function Szukaj() {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
     const [loading, setLoading] = useState<boolean>(true);
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
