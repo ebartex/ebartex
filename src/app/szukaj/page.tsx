@@ -67,6 +67,8 @@ export default function Szukaj() {
                                         <Image
                                             src={item.photo_512 || "https://via.placeholder.com/150"}
                                             alt={item.nazwa}
+                                            width={128} // Stała szerokość
+                                            height={128} // Stała wysokość
                                             className="w-32 h-32 object-cover mb-4"
                                         />
                                         <span className="text-center">{item.nazwa}</span>
