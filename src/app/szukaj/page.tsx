@@ -81,9 +81,7 @@ function SearchContent({ initialQuery }: { initialQuery: string }) {
 }
 
 export default function Szukaj() {
-    const searchParams = useSearchParams();
-    const initialQuery = searchParams.get('q') || '';
-
+    // Wrap the useSearchParams hook in a Suspense boundary
     return (
         <Suspense fallback={<p>Ładowanie...</p>}>
             <Infobar />
@@ -92,7 +90,9 @@ export default function Szukaj() {
                 <h1 className="text-2xl font-bold my-4">Wyniki wyszukiwania</h1>
                 <div className="w-full">
                     <aside className="hidden md:block bg-white p-4"></aside>
-                    <SearchContent initialQuery={initialQuery} />
+                    <Suspense fallback={<p>Ładowanie zapytania...</p>}>
+                        <SearchContent initialQuery={useSearchParams().get('q') || ''} />
+                    </Suspense>
                 </div>
             </div>
         </Suspense>
