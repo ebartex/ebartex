@@ -22,6 +22,10 @@ export default function Szukaj() {
     const [results, setResults] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
 
+    function isProductData(data: unknown): data is { Product: Product[] } {
+        return typeof data === 'object' && data !== null && 'Product' in data;
+    }
+    
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -30,14 +34,19 @@ export default function Szukaj() {
                     `https://bapi.ebartex.pl/products/format5.json?Product-nazwa=?${initialQuery}?`, 
                     { revalidate: 5 }
                 );
-                setResults(data.Product || []);
+    
+                if (isProductData(data)) {
+                    setResults(data.Product || []);
+                } else {
+                    throw new Error('Unexpected data format');
+                }
             } catch {
                 setError('Wystąpił błąd podczas pobierania danych.');
             } finally {
                 setLoading(false);
             }
         };
-
+    
         if (initialQuery) {
             fetchData();
         } else {
