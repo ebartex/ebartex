@@ -7,11 +7,14 @@ import { fetchBapi } from "@/common/api/fetchBapi";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Infobar from "@/common/components/infobar";
+
+// Define the type for a Product
 type Product = {
     tw_id: string | number;
     nazwa: string;
     photo_512?: string;
 };
+
 export default function Szukaj() {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
@@ -28,7 +31,7 @@ export default function Szukaj() {
                     { revalidate: 5 }
                 );
                 setResults(data.Product || []);
-            } catch (err) {
+            } catch {
                 setError('Wystąpił błąd podczas pobierania danych.');
             } finally {
                 setLoading(false);
@@ -60,7 +63,7 @@ export default function Szukaj() {
                             <p className="text-red-500">{error}</p>
                         ) : results.length > 0 ? (
                             <div className="bg-white grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-0 w-full">
-                                {results.map((item: any) => (
+                                {results.map((item) => (
                                     <Link
                                         key={item.tw_id}
                                         href={`/products/view/${item.tw_id}/${encodeURIComponent(
