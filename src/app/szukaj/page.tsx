@@ -1,5 +1,4 @@
 'use client';
-
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from "next/image";
@@ -15,7 +14,7 @@ type Product = {
     nazwa: string;
     photo_512?: string;
 };
- 
+
 export default function Szukaj() {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
@@ -50,7 +49,7 @@ export default function Szukaj() {
 
     return (
         <Suspense fallback={<p>Ładowanie...</p>}>
-            <Infobar />  
+            <Infobar />
             <Navbar />
             <div className="container mx-auto px-4">
                 <h1 className="text-2xl font-bold my-4">Wyniki wyszukiwania</h1>
