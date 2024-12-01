@@ -1,5 +1,5 @@
 'use client';
-
+import Image from "next/image";
 import Navbar from "@/common/components/navbar";
 import { useSearchParams } from "next/navigation";
 import '@/styles/globals.css';
@@ -64,7 +64,7 @@ export default function Szukaj() {
                                         )}`}
                                         className="p-4 border border-slate-200 flex flex-col items-center hover:bg-slate-100 transition-colors"
                                     >
-                                        <img
+                                        <Image
                                             src={item.photo_512 || "https://via.placeholder.com/150"}
                                             alt={item.nazwa}
                                             className="w-32 h-32 object-cover mb-4"
