@@ -2,33 +2,29 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["imgstatic.ebartex.pl", "via.placeholder.com"], // Dodaj dozwolone domeny
+    domains: ["imgstatic.ebartex.pl", "via.placeholder.com"],
   },
-  reactStrictMode: true, // Włącza tryb ścisły Reacta
-  reactRoot: true, // Włącza obsługę React Server Components (od Next.js 13.4)
+  reactStrictMode: true,
   experimental: {
-    scrollRestoration: true, // Umożliwia przywracanie pozycji scrolla
-    appDir: true, // Włącza nowy sposób organizacji aplikacji przy użyciu folderu `app`
+    scrollRestoration: true, // Włącza przywracanie pozycji scrolla
   },
   env: {
-    CUSTOM_ENV_VARIABLE: "my_value", // Dodaje zmienne środowiskowe
+    CUSTOM_ENV_VARIABLE: "my_value",
   },
   webpack(config, { isServer }) {
-    // Możesz dodać konfigurację webpacka tutaj
     if (!isServer) {
       config.resolve.fallback = {
-        fs: false, // Jeśli używasz bibliotek, które używają `fs` (np. w Node.js)
+        fs: false,
       };
     }
     return config;
   },
-  // Inne opcje konfiguracji
   async redirects() {
     return [
       {
         source: "/old-url",
         destination: "/new-url",
-        permanent: true, // Ustawienie 301
+        permanent: true,
       },
     ];
   },
