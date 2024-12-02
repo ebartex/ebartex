@@ -1,24 +1,31 @@
 // Importy i typy
-
 import Navbar from '@/common/components/navbar';
 import ProductDetails from '@/common/components/ui/product/productDetails';
-import { NextPage } from 'next';
+import { Suspense } from 'react';
+
+type ProductResponse = {
+  Product: {
+    nazwa: string; // Nazwa produktu
+    photo_512: string; // URL zdjęcia produktu
+    // Dodaj inne właściwości produktu, jeśli są potrzebne
+  }[];
+};
 
 type PostPageProps = {
   params: {
     id: string;
     slug: string;
   };
-}
+};
 
-// Główna funkcja komponentu
-const Product: NextPage<PostPageProps> = async ({ params }) => {
+// Komponent strony produktu
+const Product = async ({ params }: PostPageProps) => {
   const { id } = params;
 
-  // Pobieranie danych
+  // Pobieranie danych z API
   const response = await fetch(
     `https://bapi.ebartex.pl/products/format5.json?Product-tw_id=${id}`,
-    { next: { revalidate: 5 } }
+    { next: { revalidate: 5 } } // Użycie ISR jeśli wymagane
   );
 
   if (!response.ok) {
@@ -36,12 +43,11 @@ const Product: NextPage<PostPageProps> = async ({ params }) => {
       <Navbar />
       <div className="product">
         <h1>{product.Product[0].nazwa}</h1>
-   
         <ProductDetails details={product} />
       </div>
     </div>
   );
-}
+};
 
-
+// Eksportowanie komponentu
 export default Product;
