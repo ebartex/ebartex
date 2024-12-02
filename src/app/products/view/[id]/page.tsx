@@ -1,8 +1,8 @@
-// app/products/[id]/page.js
+// app/products/view/[id]/page.tsx
 import React from 'react';
 
 // Funkcja asynchroniczna do pobrania danych
-async function getProductData(id) {
+async function getProductData(id: string) {
   const response = await fetch(`https://bapi.ebartex.pl/products/format5.json?Product-tw_id=${id}`, {
     cache: 'no-store', // Zapewnia, że dane są zawsze świeże
   });
@@ -16,18 +16,18 @@ async function getProductData(id) {
 }
 
 // Komponent funkcjonalny
-const Product = async ({ params }) => {
+const Product = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   try {
     const product = await getProductData(id);
 
-    if (!product || !product.Product[0].nazwa) {
+    if (!product || !product.nazwa) {
       return <div>Produkt nie został znaleziony.</div>;
     }
 
     return (
       <div>
-        <h1>{product.Product[0].nazwa}</h1>
+        <h1>{product.nazwa}</h1>
       </div>
     );
   } catch (error) {
