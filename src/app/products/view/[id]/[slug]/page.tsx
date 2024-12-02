@@ -1,29 +1,47 @@
-import { fetchBapi } from '@/common/api/fetchBapi';
+// Importy i typy
+
 import Navbar from '@/common/components/navbar';
 import ProductDetails from '@/common/components/ui/product/productDetails';
-import ProductImage from '@/common/components/ui/product/productImage';
-type PostPageProduct = {
-  params: {
-    id: string,
-    slug: string
-  }
-}
-export default async function Product({ params }:  PostPageProduct ) {
-  // Ensure params is awaited before accessing id and slug
-  const { id, slug } = params;
+import { NextPage } from 'next';
 
-  // Fetch product details based on the ID (and slug if needed)
-  const product = await fetchBapi(`https://bapi.ebartex.pl/products/format5.json?Product-tw_id=${id}`, { revalidate: 5 });
+type PostPageProps = {
+  params: {
+    id: string;
+    slug: string;
+  };
+}
+
+// Główna funkcja komponentu
+const Product: NextPage<PostPageProps> = async ({ params }) => {
+  const { id } = params;
+
+  // Pobieranie danych
+  const response = await fetch(
+    `https://bapi.ebartex.pl/products/format5.json?Product-tw_id=${id}`,
+    { next: { revalidate: 5 } }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch product data: ${response.statusText}`);
+  }
+
+  const product: ProductResponse = await response.json();
+
+  if (!product.Product || product.Product.length === 0) {
+    return <div>Product not found</div>;
+  }
 
   return (
     <div>
       <Navbar />
       <div className="product">
-      {product.Product[0].nazwa}
-      <ProductImage image={product.Product[0].photo_512} />
-      <ProductDetails details={product} />
+        <h1>{product.Product[0].nazwa}</h1>
+   
+        <ProductDetails details={product} />
       </div>
     </div>
   );
 }
- 
+
+
+export default Product;
