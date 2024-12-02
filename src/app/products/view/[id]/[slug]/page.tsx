@@ -10,7 +10,7 @@ type PostPageProduct = {
 }
 export default async function Product({ params }:  PostPageProduct ) {
   // Ensure params is awaited before accessing id and slug
-  const { id } = await params;
+  const { id, slug } = params;
 
   // Fetch product details based on the ID (and slug if needed)
   const product = await fetchBapi(`https://bapi.ebartex.pl/products/format5.json?Product-tw_id=${id}`, { revalidate: 5 });
