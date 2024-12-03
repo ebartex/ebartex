@@ -1,7 +1,9 @@
 'use client';
+
 import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Product = {
   nazwa: string;
@@ -11,6 +13,9 @@ type Product = {
 export default function Szukaj() {
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get('q') || ''; // Pobranie wartości parametru 'q' z URL
 
   // Pobieranie danych z API
   const fetchResults = async (query: string) => {
@@ -32,14 +37,12 @@ export default function Szukaj() {
     }
   };
 
-  // Obsługuje zmiany zapytania w URL
+  // Obsługuje zmiany zapytania w URL i wywołuje fetchResults
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get('q');
     if (query) {
       fetchResults(query);
     }
-  }, []);
+  }, [query]); // Dodano `query` jako zależność
 
   return (
     <>
