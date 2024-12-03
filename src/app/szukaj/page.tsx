@@ -3,7 +3,7 @@
 import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 type Product = {
   nazwa: string;
@@ -13,7 +13,6 @@ type Product = {
 export default function Szukaj() {
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || ''; // Pobranie wartości parametru 'q' z URL
 
