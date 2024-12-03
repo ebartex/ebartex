@@ -2,7 +2,7 @@
 
 import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 type Product = {
@@ -21,7 +21,7 @@ export default function Szukaj() {
     setLoading(true);
 
     try {
-      const response = await fetch(`https://bapi.ebartex.pl/products/format5.json?Product-nazwa=?${encodeURIComponent(query)}?`);
+      const response = await fetch(`https://bapi.ebartex.pl/products/format5.json?Product-nazwa=${encodeURIComponent(query)}`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -29,8 +29,8 @@ export default function Szukaj() {
       const data = await response.json();
       setResults(data.Product);
 
-    } catch {
-      // Opcjonalnie: Dodaj tutaj logowanie błędów dla debugowania
+    } catch (error) {
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ export default function Szukaj() {
   }, [query]); // Dodano `query` jako zależność
 
   return (
-    <>
+    <Suspense fallback={<p>Loading...</p>}>
       <Infobar />
       <Navbar />
 
@@ -61,6 +61,6 @@ export default function Szukaj() {
           <p>No results found</p>
         )}
       </div>
-    </>
+    </Suspense>
   );
 }
