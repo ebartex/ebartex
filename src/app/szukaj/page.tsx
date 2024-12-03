@@ -1,7 +1,7 @@
 'use client';
 import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 type Product = {
   nazwa: string;
@@ -45,7 +45,7 @@ export default function Szukaj() {
     <>
       <Infobar />
       <Navbar />
-
+      <Suspense fallback={<div>Ładowanie...</div>}>
       <div className="p-4">
         {loading && <p>Loading...</p>}
         {!loading && results.length > 0 && (
@@ -59,6 +59,7 @@ export default function Szukaj() {
           <p>No results found</p>
         )}
       </div>
+      </Suspense>
     </>
   );
 }

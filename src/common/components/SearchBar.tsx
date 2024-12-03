@@ -1,5 +1,5 @@
 'use client';
-import { useState, Suspense } from 'react';
+import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -18,7 +18,7 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <Suspense fallback={<div>Ładowanie...</div>}>
+ 
     <div className="flex-1 mx-4 relative">
       <form onSubmit={handleSearchSubmit} className="w-full">
         <input
@@ -36,7 +36,7 @@ const SearchBar: React.FC = () => {
         </button>
       </form>
     </div>
-    </Suspense>
+    
   );
 };
 
