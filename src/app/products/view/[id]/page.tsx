@@ -14,25 +14,23 @@ async function getProductData(id: string) {
   const data = await response.json();
   return data;
 }
-
+type tParams = Promise<{id: string}>;
 // Komponent funkcjonalny
-const Product = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  try {
+const Product = async ({ params }: { params: tParams } ) => {
+  const {id} = await params;
+
     const product = await getProductData(id);
 
-    if (!product || !product.nazwa) {
+    if (!product || !product.Product[0].nazwa) {
       return <div>Produkt nie został znaleziony.</div>;
     }
 
     return (
       <div>
-        <h1>{product.nazwa}</h1>
+        <h1>{product.Product[0].nazwa}</h1>
       </div>
     );
-  } catch (error) {
-    return <div>Wystąpił błąd: {error.message}</div>;
-  }
+
 };
 
 export default Product;
