@@ -1,4 +1,6 @@
 // app/products/view/[id]/page.tsx
+import Infobar from '@/common/components/infobar';
+import Navbar from '@/common/components/navbar';
 import ProductImageGallery from '@/common/components/ProductImageGallery';
 import React from 'react';
 type tParams = Promise<{id: string}>;
@@ -28,9 +30,19 @@ const Product = async ({ params }: { params: tParams } ) => {
     }
 
     return (
-      <div>
-        <h1>{product.Product[0].nazwa}</h1>
-        <ProductImageGallery imageSrc={product.Product[0].photo_512 || []} />
+      <div className="bg-slate-200 min-h-screen">
+        <Infobar/>
+        <Navbar/>
+        <div className="flex">
+          <div className="w-1/2">
+          <ProductImageGallery imageSrc={product.Product[0].photo_512 || []} />
+          </div>
+          <div className="w-1/2">
+          <h1>{product.Product[0].nazwa}</h1>
+          </div>
+          
+          
+        </div>
       </div>
     );
 
