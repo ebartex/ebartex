@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
-import Wyniki from "./Wyniki";
+import Wyniki from "./wyniki";
 import { useSearchParams } from "next/navigation";
 
 export default function Szukaj() {
