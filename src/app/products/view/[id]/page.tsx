@@ -1,5 +1,7 @@
 // app/products/view/[id]/page.tsx
+import ProductImageGallery from '@/common/components/ProductImageGallery';
 import React from 'react';
+type tParams = Promise<{id: string}>;
 
 // Funkcja asynchroniczna do pobrania danych
 async function getProductData(id: string) {
@@ -14,13 +16,13 @@ async function getProductData(id: string) {
   const data = await response.json();
   return data;
 }
-type tParams = Promise<{id: string}>;
+
 // Komponent funkcjonalny
 const Product = async ({ params }: { params: tParams } ) => {
   const {id} = await params;
 
     const product = await getProductData(id);
-
+    console.log(product.Product[0]);
     if (!product || !product.Product[0].nazwa) {
       return <div>Produkt nie został znaleziony.</div>;
     }
@@ -28,6 +30,7 @@ const Product = async ({ params }: { params: tParams } ) => {
     return (
       <div>
         <h1>{product.Product[0].nazwa}</h1>
+        <ProductImageGallery imageSrc={product.Product[0].photo_512 || []} />
       </div>
     );
 
