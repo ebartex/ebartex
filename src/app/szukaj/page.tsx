@@ -58,7 +58,7 @@ function SearchResults() {
         <ul className="space-y-2">
         {results.length > 0 ? (
         <div className="bg-white grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-0 w-full">
-          {results.map((result, index) => (
+          {results.map((result) => (
                                     <Link
                                     key={result.tw_id}
                                     href={`/products/view/${result.tw_id}/${encodeURIComponent(
