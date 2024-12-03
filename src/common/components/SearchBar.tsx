@@ -1,13 +1,15 @@
 'use client';
+
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-const SearchBar: React.FC = () => {
-    const searchParams = useSearchParams();
-    const initialSearchTerm = searchParams.get('q') || ''; // Pobranie wartości parametru 'q' z URL
+const SearchBarComponent: React.FC = () => {
+  const searchParams = useSearchParams();
+  const initialSearchTerm = searchParams.get('q') || ''; // Pobranie wartości parametru 'q' z URL
 
-    const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const router = useRouter();
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -18,7 +20,6 @@ const SearchBar: React.FC = () => {
   };
 
   return (
- 
     <div className="flex-1 mx-4 relative">
       <form onSubmit={handleSearchSubmit} className="w-full">
         <input
@@ -36,8 +37,13 @@ const SearchBar: React.FC = () => {
         </button>
       </form>
     </div>
-    
   );
 };
 
-export default SearchBar;
+export default function SearchBar() {
+  return (
+    <Suspense fallback={<div>Ładowanie komponentu wyszukiwania...</div>}>
+      <SearchBarComponent />
+    </Suspense>
+  );
+}
