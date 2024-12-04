@@ -3,7 +3,7 @@ import Infobar from '@/common/components/infobar';
 import Navbar from '@/common/components/navbar';
 import ProductImageGallery from '@/common/components/ProductImageGallery';
 import React from 'react';
-type tParams = Promise<{id: string}>;
+type tParams = Promise<{id: string, slug: string}>;
 
 // Funkcja asynchroniczna do pobrania danych
 async function getProductData(id: string) {
