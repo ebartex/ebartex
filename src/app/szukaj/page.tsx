@@ -23,7 +23,7 @@ function SearchResults() {
   useEffect(() => {
     if (query) {
       setLoading(true);
-      fetch(`https://bapi.ebartex.pl/products/format5.json?Product-nazwa=?${encodeURIComponent(query)}?`)
+      fetch(`https://bapi.ebartex.pl/products/format5.json?Product-nazwa=?${encodeURIComponent(query)}?&Product-cenad=!0.0`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Failed to fetch data');
