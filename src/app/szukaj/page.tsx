@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+
 import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
 import Link from "next/link";
@@ -9,7 +10,9 @@ import Image from "next/image";
 type Product = {
   nazwa: string
   photo_512: string,
-  tw_id: number
+  tw_id: number,
+  cenad: string,
+  stan: number
   // Dodaj inne pola, które mogą być obecne w danych
 };
 
@@ -54,37 +57,62 @@ function SearchResults() {
         <h1 className="text-2xl font-bold">Wyniki wyszukiwania</h1>
       </header>
       <section>
-
-        <ul className="space-y-2">
+    <ul className="space-y-2">
         {results.length > 0 ? (
-        <div className="bg-white grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-0 w-full">
-          {results.map((result) => (
-                                    <Link
-                                    key={result.tw_id}
-                                    href={`/products/view/${result.tw_id}/${encodeURIComponent(
-                                        result.nazwa.toLowerCase().replace(/\s+/g, '-')
-                                    )}`}
-                                    className="p-4 border border-slate-200 flex flex-col items-center hover:bg-slate-100 transition-colors"
-                                >
-                                    <Image
-                                        width={100}
-                                        height={100}
-                                        src={result.photo_512 || "https://via.placeholder.com/150"}
-                                        alt={result.nazwa}
-                                        className="w-32 h-32 object-cover mb-4"
-                                    />
-                                    <span className="text-center">{result.nazwa}</span>
-                                    <p className="text-gray-600 mt-2">ID: {result.tw_id}</p>
-                                </Link>            
-
-          ))}
+            <div className="bg-white grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-0 w-full">
+                {results.map((result) => (
+                  <Link
+  key={result.tw_id}
+  href={`/products/view/${result.tw_id}/${encodeURIComponent(
+    result.nazwa.toLowerCase().replace(/\s+/g, '-')
+  )}`}
+  className="p-4 border border-slate-200 flex flex-col items-center transition-colors relative"
+>
+  {/* Sekcja zdjęcia */}
+  <div className="photo-section mb-4 flex justify-center">
+    <Image
+      width={100}
+      height={100}
+      src={result.photo_512 || "https://via.placeholder.com/150"}
+      alt={result.nazwa}
+      className="w-32 h-32 object-cover"
+    />
+  </div>
+  {/* Sekcja informacji */}
+  <div className="info-section flex flex-col items-start w-full h-32 justify-between">
+    <span className="text-left text-sm mb-2">{result.nazwa}</span> {/* Dodano odstęp między nazwą a badge */}
+    
+    {/* Sekcja dla badge */}
+    <div className="stock-section absolute bottom-14 right-4">
+      {/* Czerwony badge dla "Brak w magazynie" */}
+      {result.stan < 1 && (
+        <div className="flex items-center px-3 py-1 bg-red-600 text-white rounded-full w-30 justify-center">
+          <span className="text-xs font-bold">Brak w magazynie</span>
         </div>
-      ) : (
-        <p>No results found</p>
       )}
 
-        </ul>
-      </section>
+      {/* Zielony badge dla "W magazynie" */}
+      {result.stan > 0 && (
+        <div className="flex items-center px-3 py-1 bg-green-600 text-white rounded-full w-31 justify-center">
+          <span className="text-xs font-bold">W magazynie</span>
+        </div>
+      )}
+    </div>
+
+    <p className="text-left text-lg font-extrabold mt-2">{result.cenad}zł</p>
+  </div>
+</Link>
+
+
+
+                ))}
+            </div>
+        ) : (
+            <p className="text-left">No results found</p>
+        )}
+    </ul>
+</section>
+
     </main>
 
     </div>
