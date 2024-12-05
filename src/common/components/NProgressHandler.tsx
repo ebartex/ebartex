@@ -6,7 +6,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'; // Styl paska ładowania
 
 // Konfiguracja NProgress
-NProgress.configure({ showSpinner: false });
+NProgress.configure({ showSpinner: false, speed: 300 });
 
 export default function NProgressHandler() {
   const pathname = usePathname(); // Użycie usePathname do śledzenia zmiany ścieżki
