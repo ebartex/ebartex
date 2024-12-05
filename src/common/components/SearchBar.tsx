@@ -42,7 +42,7 @@ const SearchBarComponent: React.FC = () => {
 
 export default function SearchBar() {
   return (
-    <Suspense fallback={<div>Ładowanie komponentu wyszukiwania.....</div>}>
+    <Suspense fallback={<div>Ładowanie komponentu wyszukiwania...</div>}>
       <SearchBarComponent />
     </Suspense>
   );
