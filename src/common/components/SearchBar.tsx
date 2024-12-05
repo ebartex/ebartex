@@ -27,7 +27,7 @@ const SearchBarComponent: React.FC = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Szukaj..."
-          className="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:outline-4 focus:outline-slate-400"
+          className="w-full p-2 border border-slate-300 rounded-full focus:outline-none focus:outline-3 focus:outline-slate-400"
         />
         <button
           type="submit"
@@ -42,7 +42,7 @@ const SearchBarComponent: React.FC = () => {
 
 export default function SearchBar() {
   return (
-    <Suspense fallback={<div>Ładowanie komponentu wyszukiwania...</div>}>
+    <Suspense fallback={<div>Ładowanie komponentu wyszukiwania.....</div>}>
       <SearchBarComponent />
     </Suspense>
   );

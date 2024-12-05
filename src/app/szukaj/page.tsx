@@ -7,6 +7,7 @@ import Infobar from "@/common/components/infobar";
 import Navbar from "@/common/components/navbar";
 import Link from "next/link";
 import Image from "next/image";
+import NProgressHandler from "@/common/components/NProgressHandler";
 type Product = {
   nazwa: string
   photo_512: string,
@@ -73,7 +74,7 @@ function SearchResults() {
     <Image
       width={100}
       height={100}
-      src={result.photo_512 || "https://via.placeholder.com/150"}
+      src={result.photo_512 || "/products_thumbs.png"}
       alt={result.nazwa}
       className="w-32 h-32 object-cover"
     />
@@ -122,6 +123,7 @@ function SearchResults() {
 export default function Szukaj() {
   return (
     <Suspense fallback={<div>Ładowanie wyników wyszukiwania...</div>}>
+      <NProgressHandler />
       <Infobar />
       <Navbar />
       <SearchResults />
