@@ -5,24 +5,24 @@ import { usePathname } from 'next/navigation';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'; // Styl paska ładowania
 
+// Konfiguracja NProgress
 NProgress.configure({ showSpinner: false });
 
 export default function NProgressHandler() {
-  const pathname = usePathname(); // Monitorowanie ścieżek
+  const pathname = usePathname(); // Użycie usePathname do śledzenia zmiany ścieżki
 
   useEffect(() => {
-    const productPagePattern = /^\/products\/[^/]+\/[^/]+$/;
-
-    if (productPagePattern.test(pathname)) {
-      NProgress.start(); // Start tylko dla pasujących ścieżek
-    } else {
-      NProgress.done();
-    }
-
-    return () => {
+    const handleStart = () => {
+      NProgress.start();
+    };
+    const handleStop = () => {
       NProgress.done();
     };
-  }, [pathname]);
 
-  return null; // Komponent nie renderuje nic
+    // Rozpoczęcie i zakończenie ładowania przy każdej zmianie ścieżki
+    handleStart();
+    handleStop();
+  }, [pathname]); // Zależność od zmiany ścieżki
+
+  return null; // Komponent nie renderuje niczego
 }
