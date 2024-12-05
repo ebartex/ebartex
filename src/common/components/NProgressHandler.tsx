@@ -14,7 +14,7 @@ export default function NProgressHandler() {
   useEffect(() => {
     const handleStart = () => {
       NProgress.start();
-    };
+    }; 
     const handleStop = () => {
       NProgress.done();
     };

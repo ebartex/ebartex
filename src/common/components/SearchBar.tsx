@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -18,7 +18,9 @@ const SearchBarComponent: React.FC = () => {
       router.push(`/szukaj?q=${encodeURIComponent(searchTerm.trim())}`);
     }
   };
-
+  const clearSearch = () => {
+    setSearchTerm('');
+   }
   return (
     <div className="flex-1 mx-4 relative">
       <form onSubmit={handleSearchSubmit} className="w-full">
@@ -29,6 +31,15 @@ const SearchBarComponent: React.FC = () => {
           placeholder="Szukaj..."
           className="w-full p-2 border border-slate-300 rounded-full focus:outline-none focus:outline-3 focus:outline-slate-400"
         />
+        {searchTerm && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              className="absolute top-1/2 right-10 transform -translate-y-1/2 text-slate-500 hover:text-slate-700"
+            >
+              <X size={20} />
+            </button>
+          )}        
         <button
           type="submit"
           className="absolute top-1/2 right-3 transform -translate-y-1/2 text-slate-500 hover:text-slate-700"
