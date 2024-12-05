@@ -3,10 +3,10 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css'; // Styl paska ładowania
+import '@/styles/nprogress.css'; // Styl paska ładowania
 
 // Konfiguracja NProgress
-NProgress.configure({ showSpinner: false, speed: 300 });
+NProgress.configure({ showSpinner: false, speed: 700 });
 
 export default function NProgressHandler() {
   const pathname = usePathname(); // Użycie usePathname do śledzenia zmiany ścieżki
@@ -25,4 +25,5 @@ export default function NProgressHandler() {
   }, [pathname]); // Zależność od zmiany ścieżki
 
   return null; // Komponent nie renderuje niczego
-}
+} 
+ 
